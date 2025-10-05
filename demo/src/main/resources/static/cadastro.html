@@ -2,30 +2,212 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Diretor ou Organizador</title>
+    <title>Cadastro de Diretor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: #2d3748;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .cadastro-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 45px 35px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a202c;
+            margin-bottom: 40px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"] {
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        input:valid { border-color: #10b981; }   /* verde quando válido */
+        input:invalid { border-color: #ef4444; } /* vermelho quando inválido */
+
+        button.primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button.primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button.primary:hover::before { left: 100%; }
+        button.primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3); }
+        button.primary:active { transform: translateY(-1px); }
+
+        button.secondary {
+            width: 100%;
+            padding: 14px;
+            background: #e2e8f0;
+            color: #1e40af;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        button.secondary:hover { background: #cbd5e1; }
+
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            transition: width 0.3s ease;
+        }
+
+        .links a:hover::after { width: 100%; }
+        .links a:hover { color: #1e40af; }
+
+        @media (max-width: 480px) {
+            .cadastro-container { padding: 35px 25px; margin: 10px; }
+            h1 { font-size: 26px; }
+        }
+    </style>
 </head>
 <body>
-<h1>Cadastro de Diretor ou Organizador</h1>
+    <div class="cadastro-container">
+        <h1>Cadastro de Diretor</h1>
+        <form action="/diretores/salvar" method="post">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" name="nome" required>
 
-<form action="/diretores/cadastrar-via-get" method="get">
-    <label for="nome">Nome:</label><br>
-    <input type="text" id="nome" name="nome" required><br><br>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required>
 
-    <label for="email">E-mail:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone" required>
 
-    <label for="telefone">Telefone:</label><br>
-    <input type="text" id="telefone" name="telefone" required><br><br>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required minlength="6">
 
-    <label for="senha">Senha:</label><br>
-    <input type="password" id="senha" name="senha" required><br><br>
+            <button type="submit" class="primary">Criar Conta</button>
+        </form>
 
-    <button type="submit">Cadastrar</button> <!--botão pra recadastrar-->
-</form>
+        <button class="secondary" onclick="window.location.href='/diretores/listar'">
+            Ver Diretores Cadastrados
+        </button>
 
-
-<div style="margin-top: 20px;">
-    <button type="button" onclick="window.location.href='cadastro.html'">Cadastrar outro</button>
-</div>
+        <div class="links">
+            <a href="/login">Já tem conta? Faça login</a>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +15,10 @@ public class DiretorService {
 
     public Diretor cadastrar(Diretor diretor) {
         return repository.save(diretor);
+    }
+
+    // ✅ Novo método para listar todos os diretores
+    public List<Diretor> listarTodos() {
+        return repository.findAll();
     }
 }
